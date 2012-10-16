@@ -1,5 +1,10 @@
+body {
+	background-color: #444;
+}
+
 textarea {
-	width:			300px;
-	height: 		200px;
+	width:			500px;
+	height: 		300px;
 	font-family: 	monospace;
+	font-size:      14px;
 }
