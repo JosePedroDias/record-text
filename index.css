@@ -12,3 +12,13 @@ textarea {
 pre {
     color:          #FFF;
 }
+
+.recording {
+    background-color:   red;
+    color:              #FFF;
+}
+
+.playing {
+    background-color:   green;
+    color:              #FFF;
+}
