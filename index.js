@@ -6,7 +6,6 @@ var $ = function(i) {
 
 var t1El = $('#t1'),        // RECORD   TA
     t2El = $('#t2'),        // PLAYBACK TA
-    pEl  = $('pre'),
 
     isRecording = false,    // BOTH
     t0,
@@ -16,7 +15,14 @@ var t1El = $('#t1'),        // RECORD   TA
     n,
 
     currEventI,             // PLAYBACK
-    playTimer;
+    playTimer,
+    playSpeed = 2,
+
+    preEl = $('pre'),       // AUX UI
+    recEl = $('#rec'),
+    plyEl = $('#ply'),
+    tmeEl = $('#tme'),
+    pctEl = $('#pct');
     
 
 
@@ -60,11 +66,17 @@ var check4Changes = function() {
     o = n;
 
     if (isRecording) {
-        d.unshift( new Date().valueOf() - t0);
+        var t = new Date().valueOf() - t0;
+        d.unshift(t);
         events.push(d);
+
+        // UI
+        tmeEl.innerHTML = (t/1000).toFixed(1);
     }
     else {
-        pEl.innerHTML = JSON.stringify(d);      // DEBUG
+        //UI
+        preEl.innerHTML = JSON.stringify(d);      // DEBUG
+
         updateStrings(d);
     }
     
@@ -75,7 +87,9 @@ t1El.addEventListener('keyup', check4Changes);
 
 
 var startRecording = function() {
-    $('#r').className = 'recording';
+    // UI
+    recEl.className = 'recording';
+
     events = [];
     t0 = new Date().valueOf();
     isRecording = true;
@@ -84,7 +98,13 @@ var startRecording = function() {
 
 
 var stopRecording = function() {
-    $('#r').className = '';
+    // UI
+    recEl.className = '';
+    tmeEl.innerHTML = [
+        'Saved ', events.length ,' events in ', (events[events.length-1][0] / 1000).toFixed(1), ' seconds.<br/>',
+        'They take ', JSON.stringify(events).length, ' bytes.'
+    ].join('');
+
     isRecording = false;
 };
 
@@ -126,7 +146,9 @@ var updateString = function(d) {
 
 
 var startPlayback = function() {
-    $('#p').className = 'playing';
+    // UI
+    plyEl.className = 'playing';
+
     currEventI = 0;
     t0 = new Date().valueOf();
     playTimer = setInterval(play, 100);
@@ -136,7 +158,12 @@ var startPlayback = function() {
 
 var play = function() {
     var f = events.length;
-    var t = new Date().valueOf() - t0;
+    var t = (new Date().valueOf() - t0) * playSpeed;
+
+    // UI
+    tmeEl.innerHTML = (t/1000            ).toFixed(1);
+    pctEl.innerHTML = (currEventI/f * 100).toFixed(0) + '%';
+
     var e;
     while (currEventI < f) {
         e = events[currEventI];
@@ -150,7 +177,11 @@ var play = function() {
 
 
 var stopPlayback = function() {
-    $('#p').className = '';
+    // UI
+    plyEl.className = '';
+    tmeEl.innerHTML = '';
+    pctEl.innerHTML = '';
+
     clearInterval(playTimer);
     playTimer = undefined;
 };
