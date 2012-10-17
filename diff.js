@@ -1,3 +1,5 @@
+/* http://www.lshift.net/blog/2006/08/15/diff-for-javascript */
+
 /* Copyright (c) 2006 Tony Garnock-Jones <tonyg@lshift.net>
  * Copyright (c) 2006 LShift Ltd. <query@lshift.net>
  *
