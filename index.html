@@ -1,25 +1,54 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8"/>
+    <head>
+        <meta charset="utf-8"/>
 
-		<link rel="stylesheet" type="text/css" href="index.css"/>
+        <link rel="stylesheet" type="text/css" href="index.css"/>
 
-		<script type="text/javascript" src="diff.js"></script>
-	</head>
+        <style type="text/css">
+            textarea {
+                width:  400px;
+                height: 300px;
+            }
+        </style>
 
-	<body>
-		<textarea id="t1"></textarea>
-		<textarea id="t2"></textarea>
+        <script type="text/javascript" src="diff.js"></script>
+        <script type="text/javascript" src="RecordText.js"></script>
+    </head>
 
-		<pre></pre>
+    <body>
+        <textarea id="t1"></textarea>
+        <textarea id="t2"></textarea>
 
-		<button id="rec" onclick="isRecording ? stopRecording() : startRecording()">record</button>
-		<button id="ply" onclick="playTimer   ? stopPlayback()  : startPlayback()">play</button>
-		<br/>
-		<div id="tme"></div>
-		<div id="pct"></div>
-		
-		<script type="text/javascript" src="index.js"></script>
-	</body>
+        <pre></pre>
+
+        <button id="rec" onclick="tr.isRecording() ? tr.stop() : tr.record()">record</button>
+        <button id="ply" onclick="tr.isPlaying()   ? tr.stop() : tr.play()"  >play</button>
+
+        <br/><br/>
+        <input  id="spd" type="range" min="0.5" step="0.5" max="5" value="1" /><span>1</span> x
+
+        <script type="text/javascript">
+            var $ = function(i) {
+                return document.querySelector(i);
+            };
+
+            var tr = new RecordText( $('#t1'), $('#t2'), 1 );
+            tr._onRecord = function() {
+                $('#rec').className = 'recording';
+            };
+            tr._onPlay   = function() {
+                $('#ply').className = 'playing';
+            };
+            tr._onStop   = function() {
+                $('#rec').className = $('#ply').className = '';
+            };
+
+            $('#spd').addEventListener('change', function(ev) {
+                var v = parseFloat( ev.target.value );
+                tr._playSpeed = v;
+                $('span').innerHTML = v;
+            });
+        </script>
+    </body>
 </html>
