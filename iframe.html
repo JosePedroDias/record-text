@@ -4,6 +4,8 @@
         <meta charset="utf-8"/>
 
         <link rel="stylesheet" type="text/css" href="index.css"/>
+
+        <style type="text/css"></style>
     </head>
 
     <body>
@@ -12,7 +14,7 @@
 
         <div>
         <div>HTML</div>
-        <textarea id="h">
+        <textarea id="h" onkeydown="insertTab(this, event);">
 <!doctype html>
 <html>
     <head>
@@ -42,13 +44,13 @@ body {
 
         <div>
         <div>JS</div>
-        <textarea id="j">
+        <textarea id="j" onkeydown="insertTab(this, event);">
 document.write('asd');</textarea>
 </div>
 
 
 
-        <iframe width="500" height="300" srcdoc=""></iframe>
+        <iframe srcdoc=""></iframe>
 
 
 

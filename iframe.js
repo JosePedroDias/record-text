@@ -36,10 +36,67 @@ var insertTab = function(o, e) {
 
 
 
-setInterval(function() {
+var updateCSS = function() {
+    var dims = [
+        window.innerWidth,
+        window.innerHeight
+    ];
+    var d = [
+        ~~(dims[0] / 2) - 2,
+        ~~(dims[1] / 2) - 2
+    ];
+    var styleEl = $('style');
+    styleEl.innerHTML = [
+        'textarea, iframe {',
+            'width:  ', d[0], 'px;',
+            'height: ', d[1], 'px;',
+        '}'
+    ].join('');
+    //console.log(dims.join(', '));
+};
+updateCSS();
+window.addEventListener('resize', updateCSS);
+
+
+
+var saveMock = function() {
+    var html = htmlEl.value;
     var css  = cssEl.value;
     var js   = jsEl.value;
+    localStorage.setItem('html', html);
+    localStorage.setItem('css',  css);
+    localStorage.setItem('js',   js);
+};
+
+
+
+var loadMock = function() {
+    var html = localStorage.getItem('html');
+    var css  = localStorage.getItem('css');
+    var js   = localStorage.getItem('js');
+    htmlEl.value = html;
+    cssEl.value  = css;
+    jsEl.value   = js;
+};
+
+
+
+window.addEventListener('keydown', function(ev) {
+    var keys = ['S', 'L'];
+    var k = String.fromCharCode( ev.keyCode );
+    if ( (ev.ctrlKey || ev.metaKey) && keys.indexOf(k) !== -1) {
+        ev.preventDefault();
+        if (k === 'S') { saveMock(); console.log('SAVED!');  }
+        else {           loadMock(); console.log('LOADED!'); }
+    }
+});
+
+
+
+setInterval(function() {
     var html = htmlEl.value;
+    var css  = cssEl.value;
+    var js   = jsEl.value;
     var markup = html.replace('{css}', css).replace('{js}', js);
     $('iframe').setAttribute('srcdoc', markup);
 }, 1000);
