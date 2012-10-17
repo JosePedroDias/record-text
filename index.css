@@ -9,6 +9,18 @@ textarea {
 	height: 		  300px;
 	font-family: 	  monospace;
 	font-size:        14px;
+    background:       #EEE;
+    box-shadow:       rgba(0, 0, 0, 0.4) 0 0 10px 0 inset;
+}
+
+textarea:focus {
+    background:       #FFF;
+    box-shadow:       none;
+}
+
+iframe {
+    position:         relative;
+    border:           1px solid #000;
 }
 
 .recording {
@@ -19,4 +31,20 @@ textarea {
 .playing {
     background-color:   green;
     color:              #FFF;
+}
+
+div {
+    position:           relative;
+    display:            inline-block;
+}
+
+div > div {
+    position:           absolute;
+    right:              4px;
+    top:                4px;
+    z-index:            1000;
+    color:              #FFF;
+    background-color:   rgba(64, 64, 64, 0.75);
+    padding:            2px 4px;
+    font-size:          12px;
 }

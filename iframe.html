@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+
+        <link rel="stylesheet" type="text/css" href="index.css"/>
+    </head>
+
+    <body>
+
+
+
+        <div>
+        <div>HTML</div>
+        <textarea id="h">
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+
+        <style type="text/css">{css}</style>
+    </head>
+
+    <body>
+        <script type="text/javascript">{js}</script>
+    </body>
+</html></textarea>
+</div>
+
+
+
+        <div>
+        <div>CSS</div>
+        <textarea id="c" onkeydown="insertTab(this, event);">
+body {
+    background-color: yellow;
+    font-family: sans-serif;
+}</textarea>
+</div>
+        
+
+
+        <div>
+        <div>JS</div>
+        <textarea id="j">
+document.write('asd');</textarea>
+</div>
+
+
+
+        <iframe width="500" height="300" srcdoc=""></iframe>
+
+
+
+        <script type="text/javascript" src="iframe.js"></script>
+    </body>
+</html>
