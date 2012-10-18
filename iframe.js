@@ -81,22 +81,33 @@ var loadMock = function() {
 
 
 
+var refresh = function() {
+    var html = htmlEl.value;
+    var css  = cssEl.value;
+    var js   = jsEl.value;
+    var markup = html.replace('{css}', css).replace('{js}', js);
+    //$('iframe').setAttribute('srcdoc', markup);
+
+    var ifrEl = $('iframe');
+    var preview =  ifrEl.contentDocument || ifrEl.contentWindow.document;
+    preview.open();
+    preview.write( markup );
+    preview.close();
+};
+
+
+
 window.addEventListener('keydown', function(ev) {
-    var keys = ['S', 'L'];
+    var keys = ['S', 'L', 'G'];
     var k = String.fromCharCode( ev.keyCode );
     if ( (ev.ctrlKey || ev.metaKey) && keys.indexOf(k) !== -1) {
         ev.preventDefault();
-        if (k === 'S') { saveMock(); console.log('SAVED!');  }
-        else {           loadMock(); console.log('LOADED!'); }
+        if      (k === 'S') { saveMock(); console.log('SAVED!');  }
+        else if (k === 'L') { loadMock(); console.log('LOADED!');  }
+        else if (k === 'G') { refresh();  }
     }
 });
 
 
 
-setInterval(function() {
-    var html = htmlEl.value;
-    var css  = cssEl.value;
-    var js   = jsEl.value;
-    var markup = html.replace('{css}', css).replace('{js}', js);
-    $('iframe').setAttribute('srcdoc', markup);
-}, 1000);
+//setInterval(refresh, 1000);

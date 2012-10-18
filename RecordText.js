@@ -147,7 +147,9 @@ RecordText.prototype = {
     },
 
     _updateString: function(d) {
-        var v = this._taP.value.split('');
+        var el = this._taP;
+
+        var v = el.value.split('');
 
         var idx, b, c, o;
         idx = d[0];
@@ -155,7 +157,20 @@ RecordText.prototype = {
         c   = d[2].split('');
         v.splice.apply(v, [idx, b.length].concat(c));
 
-        this._taP.value = v.join('');
+        el.value = v.join('');
+
+        var t = idx + (c.length - b.length);
+        if (el.setSelectionRange) {
+            el.setSelectionRange(t, t);
+            //el.focus();
+        }
+        else {
+            var range = input.createTextRange();
+            range.collapse(true);
+            range.moveEnd(  'character', t);
+            range.moveStart('character', t);
+            range.select();
+        }
     }
 
 };

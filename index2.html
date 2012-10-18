@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+
+        <script src="http://codemirror.net/lib/codemirror.js"></script>
+        <script src="http://codemirror.net/mode/xml/xml.js"></script>
+        <script src="http://codemirror.net/mode/javascript/javascript.js"></script>
+        <script src="http://codemirror.net/mode/css/css.js"></script>
+        <script src="http://codemirror.net/mode/htmlmixed/htmlmixed.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="http://codemirror.net/lib/codemirror.css"/>
+
+        <link rel="stylesheet" type="text/css" href="index.css"/>
+
+        <style type="text/css">
+            textarea {
+                width:  400px;
+                height: 300px;
+            }
+        </style>
+
+        <script type="text/javascript" src="diff.js"></script>
+        <script type="text/javascript" src="RecordText.js"></script>
+    </head>
+
+    <body>
+        <textarea id="t1"></textarea>
+        <textarea id="t2"></textarea>
+
+        <pre></pre>
+
+        <button id="rec" onclick="tr.isRecording() ? tr.stop() : tr.record()">record</button>
+        <button id="ply" onclick="tr.isPlaying()   ? tr.stop() : tr.play()"  >play</button>
+
+        <br/><br/>
+        <input  id="spd" type="range" min="0.5" step="0.5" max="5" value="1" /><span>1</span> x
+
+        <script type="text/javascript">
+            var $ = function(i) {
+                return document.querySelector(i);
+            };
+
+            var tr = new RecordText( $('#t1'), $('#t2'), 1 );
+            tr._onRecord = function() {
+                $('#rec').className = 'recording';
+            };
+            tr._onPlay   = function() {
+                $('#ply').className = 'playing';
+            };
+            tr._onStop   = function() {
+                $('#rec').className = $('#ply').className = '';
+            };
+
+            $('#spd').addEventListener('change', function(ev) {
+                var v = parseFloat( ev.target.value );
+                tr._playSpeed = v;
+                $('span').innerHTML = v;
+            });
+
+
+
+            var editor = CodeMirror.fromTextArea( $('#rec'), {
+                //mode:    'text/html',
+                mode:    'javascript',
+                //tabMode: 'indent'
+            });
+        </script>
+    </body>
+</html>
