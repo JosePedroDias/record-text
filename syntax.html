@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <style type="text/css">
+.c {
+    position: relative;
+    border: 1px solid #F00;
+    background-color:#FFF;
+    width:  402px;
+    height: 202px;
+}
+
+.d, .t {
+    width:  500px;
+    height: 200px;
+    font-family: monospace;
+    font-size: 13px;
+    padding:0;
+    position: absolute;
+    left:0;
+    top:0;
+    border:0;
+}
+
+.d {
+    vz-index:10;
+}
+
+.t {
+    background-color:transparent;
+    opacity:0;
+}</style>
+    </head>
+
+    <body>
+        <div class="c">
+
+            <div class="d"></div>
+            <textarea class="t"></textarea>
+        </div>
+        
+        <script type="text/javascript">
+var $ = function(i) { return document.querySelector(i); };
+
+var tEl = $('.t');
+var dEl = $('.d');
+
+var rndClr = function() {
+    return [
+        'rgb(',
+        ~~(Math.random() * 200), ',',
+        ~~(Math.random() * 200), ',',
+        ~~(Math.random() * 200),
+        ')'
+    ].join('');
+};
+
+
+var highlight = function() {
+    var v = tEl.value;
+    v = v.split(' ');
+    v = v.map(function(w) { return '<span style="color:' + rndClr() + '">' + w + '</span>'; });
+    dEl.innerHTML = v.join(' ');
+};
+
+tEl.addEventListener('keyup', highlight);
+highlight();
+        </script>
+    
+    </body>
+</html>
